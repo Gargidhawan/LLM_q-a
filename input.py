@@ -1,8 +1,9 @@
-import os
+
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader, PDFMinerLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import SentenceTransformerEmbeddings
 from langchain_community.vectorstores import Chroma
+import os
 from constants import CHROMA_SETTINGS
 
 persist_directory = "db"
@@ -20,7 +21,7 @@ def main():
     #create embeddings here
     embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
     #create vector store here 
-    db = Chroma.from_documents(texts, embeddings,persist_directory=persist_directory)
+    db = Chroma.from_documents(texts, embeddings,persist_directory=persist_directory, client_settings=CHROMA_SETTINGS)
     db.persist()
     db = None
 
